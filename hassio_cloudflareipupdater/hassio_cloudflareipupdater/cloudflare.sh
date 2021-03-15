@@ -6,6 +6,8 @@ ZONE=$(jq --raw-output ".zone" $CONFIG_PATH)
 HOST=$(jq --raw-output ".host" $CONFIG_PATH)
 EMAIL=$(jq --raw-output ".email" $CONFIG_PATH)
 API=$(jq --raw-output ".api" $CONFIG_PATH)
+PROXY=$(jq --raw-output ".proxy" $CONFIG_PATH)
+FORCE=$(jq --raw-output ".force" $CONFIG_PATH)
 
 # Enforces required env variables
 required_vars=(ZONE HOST EMAIL API)
@@ -20,8 +22,9 @@ if [[ -n $error ]]; then
     exit 1
 fi
 
-# PROXY defaults to true
+# PROXY defaults to true, FORCE to FALSE
 PROXY=${PROXY:-true}
+FORCE=${FORCE:-false}
 
 # TTL defaults to 1 (automatic), and is validated
 TTL=${TTL:-1}
@@ -44,7 +47,7 @@ else
 fi
 
 # Determines the current IP address
-#new_ip=$($ip_curl https://davidramosweb.com/miip.php)
+new_ip=$($ip_curl https://ifconfig.me)
 
 # IP address service fallbacks
 if [[ -z $new_ip ]]; then
@@ -64,6 +67,11 @@ fi
 
 # Compares with last IP address set, if any
 ip_file="/data/ip.dat"
+
+if [ $FORCE ] then
+    rm $ip_file 
+fi
+
 if [[ -f $ip_file ]]; then
     ip=$(<$ip_file)
     if [[ $ip = "$new_ip" ]]; then
