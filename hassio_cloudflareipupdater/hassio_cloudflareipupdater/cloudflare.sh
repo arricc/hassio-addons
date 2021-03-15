@@ -68,7 +68,7 @@ fi
 # Compares with last IP address set, if any
 ip_file="/data/ip.dat"
 
-if [ $FORCE ] then
+if [ "$FORCE" = true ]; then
     rm $ip_file 
 fi
 
