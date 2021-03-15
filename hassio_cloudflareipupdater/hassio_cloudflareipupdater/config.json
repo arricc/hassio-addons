@@ -1,10 +1,10 @@
 {
   "name": "Cloudflare IP Updater (Arricc)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "slug": "hassio_cloudflareipupdater_arricc",
   "description": "Dynamic IP Updater for Cloudflare in hass.io",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
-  "url": "https://github.com/arricc/hassio-addons/hassio_cloudflareipupdater",
+  "url": "https://github.com/arricc/hassip-addons/hassio_cloudflareipupdater",
   "startup": "system",
   "boot": "auto",
 
@@ -12,12 +12,14 @@
     "zone": "",
     "host": "",
     "email": "",
-    "api": ""
+    "api": "",
+    "proxy": ""
   },
   "schema": {
     "zone": "str",
     "host": "str",
     "email": "str",
-    "api": "str"
+    "api": "str",
+    "proxy": "bool"
   }
 } 
